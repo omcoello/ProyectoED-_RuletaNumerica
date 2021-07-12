@@ -17,6 +17,20 @@ public class RuletaNum {
         this.ruleta = ruleta;
     }
     
+    public int calcularValor(){
+        int total = 0;
+        int aux;
+        for(int i = 0; i<ruleta.size(); i++){
+            aux = ruleta.get(i);
+            total += aux;
+        }
+        return total;
+    }
+
+    public void rotarDerecha(){}
+
+    public void rotarIzquierda(){}
+    
     
     public void eliminar(int index){
         ruleta.remove(index);

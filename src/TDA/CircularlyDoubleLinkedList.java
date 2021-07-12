@@ -40,12 +40,36 @@ public class CircularlyDoubleLinkedList<E> implements List<E> {
 
     @Override
     public boolean add(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(index>=0 && element!=null){
+            Node<E> traveler = first.next;
+            int j = 0;
+            while (!traveler.equals(first) && j<index){
+                traveler = traveler.next;
+                j++;
+            }
+            Node<E> nuevoNode = new Node<E>(element);
+            traveler.previous.next = nuevoNode;
+            nuevoNode.previous = traveler.previous;
+            nuevoNode.next = traveler;
+            traveler.previous = nuevoNode;
+            size++;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node<E> traveler = first.getNext();
+        int j = 0;
+        while( !traveler.equals(first) && j<index ){
+            traveler = traveler.getNext();
+            ++j;
+        }
+        traveler.previous.next = traveler.getNext();
+        traveler.next.previous = traveler.getPrevious();
+        size--;
     }
 
     @Override
