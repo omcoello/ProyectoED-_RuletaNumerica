@@ -7,27 +7,35 @@ package TDA;
 public class CircularlyDoubleLinkedList<E> implements List<E> {
 
     private Node<E> first;   
-    //Posible problema al calcularlo
-    private int value;
+    
+    private int size;
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        first.setContent(null);
+        first.setNext(null);
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return first.getNext() == null;
     }
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return size;
     }
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node<E> traveler = first.next;
+        int j = 0;
+        while(traveler != null && j<index){
+            traveler = traveler.getNext();
+            j++;
+        }
+        assert traveler != null;
+        return traveler.getContent();
     }
 
     @Override

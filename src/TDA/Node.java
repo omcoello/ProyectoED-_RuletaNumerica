@@ -7,8 +7,8 @@ package TDA;
 public class Node <E> {
     
     private E content;
-    private Node<E> next;
-    private Node<E> previous;
+    Node<E> next;
+    Node<E> previous;
     
     
     
