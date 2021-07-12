@@ -4,45 +4,47 @@ package TDA;
  *
  * @author omarc
  */
-public class Node <Integer> {
+public class Node <E> {
     
-    private int content;
-    private Node<Integer> next;
-    private Node<Integer> previous;
+    private E content;
+    private Node<E> next;
+    private Node<E> previous;
+    
+    
     
     public Node (){
-        content = 0;
+        content = null;
         this.next = null;
         this.previous = null;
     }
-    
-    public Node(int content){
+
+    public Node(E content){
         this.content = content;
         this.next = null;
         this.previous = null;
     }
 
-    public int getContent() {
+    public E getContent() {
         return content;
     }
 
-    public void setContent(int content) {
+    public void setContent(E content) {
         this.content = content;
     }
 
-    public Node<Integer> getNext() {
+    public Node<E> getNext() {
         return next;
     }
 
-    public void setNext(Node<Integer> next) {
+    public void setNext(Node<E> next) {
         this.next = next;
     }
 
-    public Node<Integer> getPrevious() {
+    public Node<E> getPrevious() {
         return previous;
     }
 
-    public void setPrevious(Node<Integer> previous) {
+    public void setPrevious(Node<E> previous) {
         this.previous = previous;
     }
     

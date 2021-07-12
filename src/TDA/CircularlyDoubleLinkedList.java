@@ -4,45 +4,52 @@ package TDA;
  *
  * @author omarc
  */
-public class CircularlyDoubleLinkedList implements List {
+public class CircularlyDoubleLinkedList<E> implements List<E> {
 
-    private Node first;
+    private Node<E> first;   
     //Posible problema al calcularlo
     private int value;
 
-    public CircularlyDoubleLinkedList() {
-        value = 0;
-        this.first = null;
-    }   
-
     @Override
-    public boolean add() {
+    public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean remove(int pos) {
+    public boolean isEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean rotate(String orientation) {
+    public int size() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int indexOf() {
+    public E get(int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean elimination(CircularlyDoubleLinkedList c1, CircularlyDoubleLinkedList c2) {
+    public boolean add(int index, E element) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int get(int index) {
+    public void remove(int index) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int indexOf(E element) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void showList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 
 }
