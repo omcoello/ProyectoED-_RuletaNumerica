@@ -49,7 +49,7 @@ public class Main extends Application {
         
         new RuletaController().generateRuleta(new RuletaNum(rul), resX, pane);
         
-        Scene scene = new Scene(pane, resX, resY);
+        Scene scene = new Scene(pane, resX+25, resY+25);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
