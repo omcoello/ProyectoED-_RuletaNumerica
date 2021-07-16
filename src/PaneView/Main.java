@@ -28,15 +28,11 @@ public class Main extends Application {
     RuletaNum ruletaNumerica;
     
     public static void main(String[] arg) {
-//        for (int i = 1; i < 5; ++i) {
-//            System.out.println("X: " + new RuletaController().generateX(i, 4, 1000));
-//            System.out.println("Y: " + new RuletaController().generateY(i, 4, 1000));
-//        }
         launch(arg);
     }    
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {/*
         double resX = 500, resY = 500;
         
         LinkedHashSet<CirculoNumerico> rul = new LinkedHashSet<>();
@@ -54,6 +50,8 @@ public class Main extends Application {
         new RuletaController().generateRuleta(new RuletaNum(rul), resX, pane);
         
         Scene scene = new Scene(pane, resX+25, resY+25);
+*/
+        Scene scene = new Scene(new PaneManagement().getIniRoot(),500,500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -62,7 +62,7 @@ public class RuletaController extends Application {
 
 
                 Button button = new Button(String.valueOf(cn.getListaNumerica().get(e - 1)));
-                button.setStyle("-fx-margin: 2px; -fx-font-weight: bold");
+                button.setStyle("-fx-margin: 2px; -fx-padding: 3px; -fx-font-weight: bold");
                 pane.getChildren().add(button);
                 button.setUserData(circle+","+ (e-1));
                 button.setLayoutX(recenteringX);
@@ -79,10 +79,6 @@ public class RuletaController extends Application {
     }
 
     public static void main(String[] arg) {
-//        for (int i = 1; i < 5; ++i) {
-//            System.out.println("X: " + new RuletaController().generateX(i, 4, 1000));
-//            System.out.println("Y: " + new RuletaController().generateY(i, 4, 1000));
-//        }
         launch(arg);
     }
 
