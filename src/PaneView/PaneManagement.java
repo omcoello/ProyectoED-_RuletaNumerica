@@ -80,25 +80,25 @@ public class PaneManagement {
             } else {
                 if (!(isNumeric(bet) && isNumeric(cir) && isNumeric(ele))) {                    
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
+                    alert.setTitle("Alerta de ingreso de datos");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese datos numericos en los cuadros de texto solicitados.");
                     alert.show();
                 } else if (!(Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9)) {                    
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
+                    alert.setTitle("Alerta de ingreso de datos");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese un numero mayor a 1 y menor a 9 para la cantidad de circulos");
                     alert.show();
                 } else if (!(Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10)) {                    
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
+                    alert.setTitle("Alerta de ingreso de datos");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese un numero mayor a 1 y menor a 10 para la cantidad de elementos");
                     alert.show();
                 } else if (!(Integer.valueOf(bet) > 0)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information Dialog");
+                    alert.setTitle("Alerta de ingreso de datos");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese una apuesta mayor a 0");
                     alert.show();
