@@ -29,7 +29,7 @@ public class Main extends Application {
 //            System.out.println("Y: " + new RuletaController().generateY(i, 4, 1000));
 //        }
         launch(arg);
-    }
+    }    
 
     @Override
     public void start(Stage primaryStage) throws Exception {

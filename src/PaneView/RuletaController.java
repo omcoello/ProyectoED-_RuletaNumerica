@@ -31,15 +31,17 @@ public class RuletaController extends Application {
     public double generateY(int k, int n, double resolution) {
         return resolution * (1 - sin(k * (2 * Math.PI / n)));
     }
+
+    public String getRandomColor() {
+        String hexNumbers[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        String hexColor = "#";
+        for (int i = 0; i < 6; i++) {
+            hexColor += hexNumbers[new Random().nextInt(16)];
+        }
+        return hexColor;
+    }
     
-    public String getRandomColor(){
-	String hexNumbers[] = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
-	String hexColor = "#";
-	for (int i = 0; i < 6; i++ ) {
-	    hexColor += hexNumbers[new Random().nextInt(16)];
-	}        
-	return hexColor;
-}
+    
 
     public void generateRuleta(RuletaNum rn, double resolution, Pane pane) {
         LinkedHashSet<CirculoNumerico> rul = rn.getRuletasNumericas();
@@ -47,7 +49,7 @@ public class RuletaController extends Application {
         for (CirculoNumerico cn : rul) {
             Circle c = new Circle();
             c.setCenterX(resolution / 2);
-            c.setCenterY(resolution / 2);            
+            c.setCenterY(resolution / 2);
             c.setStroke(Color.valueOf(getRandomColor()));
             c.setFill(null);
             pane.getChildren().add(c);
@@ -60,7 +62,7 @@ public class RuletaController extends Application {
                 Label label = new Label(String.valueOf(cn.getListaNumerica().get(e - 1)));
                 label.setStyle("-fx-margin: 2px; -fx-font-weight: bold");
                 pane.getChildren().add(label);
-                label.setUserData(circle+","+ (e-1));
+                label.setUserData(circle + "," + (e - 1));
                 label.setLayoutX(recenteringX);
                 label.setLayoutY(recenteringY);
 
