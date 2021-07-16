@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -59,12 +60,14 @@ public class RuletaController extends Application {
                 double recenteringX = (resolution - actualResolution) / 2 + generateX(e, n, actualResolution / 2);
                 double recenteringY = (resolution - actualResolution) / 2 + generateY(e, n, actualResolution / 2);
 
-                Label label = new Label(String.valueOf(cn.getListaNumerica().get(e - 1)));
-                label.setStyle("-fx-margin: 2px; -fx-font-weight: bold");
-                pane.getChildren().add(label);
-                label.setUserData(circle + "," + (e - 1));
-                label.setLayoutX(recenteringX);
-                label.setLayoutY(recenteringY);
+
+                Button button = new Button(String.valueOf(cn.getListaNumerica().get(e - 1)));
+                button.setStyle("-fx-margin: 2px; -fx-font-weight: bold");
+                pane.getChildren().add(button);
+                button.setUserData(circle+","+ (e-1));
+                button.setLayoutX(recenteringX);
+                button.setLayoutY(recenteringY);
+
 
                 //Ajustando radio del círuclo según la resolución manejada actualmente
                 if (e == 1) {

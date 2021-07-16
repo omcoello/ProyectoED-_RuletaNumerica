@@ -22,6 +22,10 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
     static Pane pane = new Pane();
+    boolean ganador = false;
+    boolean perdedor = false;
+    int numeroProhibido = 20;
+    RuletaNum ruletaNumerica;
     
     public static void main(String[] arg) {
 //        for (int i = 1; i < 5; ++i) {
@@ -53,5 +57,27 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    
+    public boolean verificarProhibidos(){
+        
+        boolean resultado = false;
+        
+        for(CirculoNumerico cn: this.ruletaNumerica.getRuletasNumericas()){
+            
+            for(int i = 0; i<cn.getListaNumerica().size();i++){
+                if(cn.getListaNumerica().get(i)<0 || cn.getListaNumerica().get(i) == numeroProhibido){
+                    resultado = false;
+                }
+                else{
+                    resultado = true;
+                }
+            }
+        }
+        
+        return resultado;
+    
+    }
+    
+    
     
 }
