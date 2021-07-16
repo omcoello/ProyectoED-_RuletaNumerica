@@ -68,18 +68,15 @@ public class PaneManagement {
         CheckBox compDecition = new CheckBox("Ayuda computador ");
         compDecition.setStyle(style);
 
-        Button verif = new Button("Jugar");
-        verif.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-        verif.setOnAction(e -> {
+        Button playButton = new Button("Jugar");
+        playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        playButton.setOnAction(e -> {
             String bet = betText.getText().trim();
             String cir = circleText.getText().trim();
             String ele = eleText.getText().trim();
             if (isNumeric(bet) && isNumeric(cir) && isNumeric(ele) && Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9 && Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10 && Integer.valueOf(bet) > 0) {
                 RuletaNum rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
-                RuletaController rc = new RuletaController();
-                gameRoot = new Pane();
-                gameScene = new Scene(gameRoot, 625, 750);
-                rc.generateRuleta(rn, 625, gameRoot);
+                
             } else {
                 if (!(isNumeric(bet) && isNumeric(cir) && isNumeric(ele))) {                    
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -111,13 +108,24 @@ public class PaneManagement {
 
         });
 
-        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, wildcard, compDecition, verif);
+        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, wildcard, compDecition, playButton);
         File path = new File("src/Resources/roulette-switch-hero.jpg");
         Image img = new Image(path.toURI().toString());
         iniRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false, false, false))));
         iniRoot.setPadding(new Insets(200, 20, 40, 20));
 
         return iniRoot;
+    }
+    
+    public Pane getGameRoot(RuletaNum rn){
+        
+        RuletaController rc = new RuletaController();
+                gameRoot = new Pane();
+                gameScene = new Scene(gameRoot, 625, 750);
+                rc.generateRuleta(rn, 625, gameRoot);
+        
+        
+        return gameRoot;
     }
 
     public RuletaNum constructRuleta(int circles, int elements) {

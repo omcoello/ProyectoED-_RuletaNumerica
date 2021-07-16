@@ -8,8 +8,7 @@ package PaneView;
 
 import Ruleta.CirculoNumerico;
 import Ruleta.RuletaNum;
-import TDA.CircularlyDoubleLinkedList;
-import java.util.LinkedHashSet;
+import java.util.Random;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
@@ -26,12 +25,14 @@ public class Main extends Application {
     boolean perdedor = false;
     int numeroProhibido = 20;
     RuletaNum ruletaNumerica;
+    double resX = 500, resY = 500;
     
     public static void main(String[] arg) {
         launch(arg);
     }    
 
     @Override
+
     public void start(Stage primaryStage) throws Exception {/*
         double resX = 500, resY = 500;
         
@@ -56,26 +57,54 @@ public class Main extends Application {
         primaryStage.show();
     }
     
-    public boolean verificarProhibidos(){
+    
+    
+    public void movimientoMaquina(){
+        Random random = new Random();
         
-        boolean resultado = false;
+        //indice random para remover un elemento o rotar una lista circular
+        int index1 = random.nextInt(2);
+        // index1 = 0 para rotar
+        // index1 = 1 para eliminar
         
-        for(CirculoNumerico cn: this.ruletaNumerica.getRuletasNumericas()){
-            
-            for(int i = 0; i<cn.getListaNumerica().size();i++){
-                if(cn.getListaNumerica().get(i)<0 || cn.getListaNumerica().get(i) == numeroProhibido){
-                    resultado = false;
+        //indice random para obtener una de las listas (para rotacion)
+        int bound = ruletaNumerica.getRuletasNumericas().size();
+        int index2 = random.nextInt(bound);
+        
+        //indice random para aplicar el remove() en caso de eliminacion
+        int indexRemove;
+        
+        // variable boolean de control para el sentido de las rotaciones
+        boolean rotacion = random.nextBoolean();
+        // rotacion = true para rotar a la derecha
+        // rotacion = false para rotar a la izquierda
+
+        int control = 0;
+        for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
+            if(index1 == 0){
+                while (control != index2){
+                    control++;
                 }
-                else{
-                    resultado = true;
+                if(control == index2){
+                    if(rotacion){
+                        cn.rotarDerecha();
+                        System.out.println("Se ha rotado a la derecha");
+                    } else{
+                        cn.rotarIzquierda();
+                        System.out.println("Se ha rotado a la izquierda");
+                    }
                 }
+
+
+            } else if(index1 == 1){
+                indexRemove = random.nextInt(cn.getListaNumerica().size());
+                cn.getListaNumerica().remove(indexRemove);
+                System.out.println("Se hizo una eliminacion");
             }
         }
         
-        return resultado;
-    
+        new RuletaController().generateRuleta(ruletaNumerica, resX, pane);
+        
     }
-    
-    
     
 }
