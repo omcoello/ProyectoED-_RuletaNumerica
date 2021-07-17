@@ -39,9 +39,11 @@ public class PaneManagement {
     static Pane gameRoot;
     static RuletaNum rn;
     static ToggleGroup functionsToggle = new ToggleGroup();
-    static ComboBox cb ;
-    
-    
+    static ComboBox cb;
+    static TextField betText;
+    static int forbiddenNum = 0;
+    static int actions = 0;
+    static boolean mandatoryRotation;
 
     static boolean forbiddenBoolean = false;
     static boolean computerBoolean = false;
@@ -68,7 +70,7 @@ public class PaneManagement {
         HBox betHb = new HBox(20);
         Label betLabel = new Label("Apuesta: ");
         betLabel.setStyle(style);
-        TextField betText = new TextField();
+        betText = new TextField();
 
         betHb.getChildren().addAll(betLabel, betText);
 
@@ -82,19 +84,19 @@ public class PaneManagement {
         Button playButton = new Button("Jugar");
         playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         playButton.setOnAction(e -> {
-            
+
             String bet = betText.getText().trim();
             String cir = circleText.getText().trim();
             String ele = eleText.getText().trim();
-            
+
             if (isNumeric(bet) && isNumeric(cir) && isNumeric(ele) && Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9 && Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10 && Integer.valueOf(bet) > 0) {
 
                 forbiddenBoolean = forbiddenNumber.isSelected();
                 computerBoolean = compDecition.isSelected();
 
                 rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
-                
-                
+                forbiddenNum = getForbiddenNum(rn);
+
                 gameRoot = getGameRoot(rn);
                 gameScene = new Scene(gameRoot, 1000, 675);
                 gameStage = new Stage();
@@ -143,7 +145,7 @@ public class PaneManagement {
 
     public Pane getGameRoot(RuletaNum rn) {
         gameRoot = new Pane();
-        RuletaController rc = new RuletaController();        
+        RuletaController rc = new RuletaController();
         rc.generateRuleta(rn, 650, gameRoot);
 
         VBox vb = new VBox(15);
@@ -154,12 +156,11 @@ public class PaneManagement {
         RadioButton eliminateRb = new RadioButton("Eliminacion");
         eliminateRb.setUserData("E");
 
-        Label orientationLb = new Label("Direccion de giro:");   
+        Label orientationLb = new Label("Direccion de giro:");
         cb = new ComboBox();
         cb.getItems().addAll("Izquierda", "Derecha");
         cb.setValue(cb.getItems().get(0));
 
-        
         rotateRb.setToggleGroup(functionsToggle);
         eliminateRb.setToggleGroup(functionsToggle);
 
@@ -168,18 +169,35 @@ public class PaneManagement {
         if (forbiddenBoolean) {
             HBox forbiddenHb = new HBox(10);
             Label forbiddenTitle = new Label("Numero prohibido: ");
-            Label forbiddenNumber = new Label("17");
+            Label forbiddenNumber = new Label(String.valueOf(forbiddenNum));
             forbiddenHb.getChildren().addAll(forbiddenTitle, forbiddenNumber);
             vb.getChildren().add(forbiddenHb);
+            if (isForbidden(rn, forbiddenNum)) {
+                exitGame("Se ha conseguido un numero negativo o el valor es igual al numero prohibido");
+            }
         }
         
+        if(actions == 4 && computerBoolean){
+            computerMovement(rn);
+            actions = 0;
+        }
+
+        if (rn.calcularValorRuleta() == Integer.valueOf(betText.getText())) {
+            exitGame("Felicidades, ha ganado el juego!");
+        }
+
         HBox valueHb = new HBox(10);
-            Label valueTitle = new Label("Valor: ");
-            Label valueNumber = new Label(String.valueOf(rn.calcularValorRuleta()));
-            valueHb.getChildren().addAll(valueTitle, valueNumber);
-            vb.getChildren().add(valueHb);
-        
-        
+        Label valueTitle = new Label("Valor: ");
+        Label valueNumber = new Label(String.valueOf(rn.calcularValorRuleta()));
+        valueHb.getChildren().addAll(valueTitle, valueNumber);
+        vb.getChildren().add(valueHb);
+
+        HBox betHb = new HBox(10);
+        Label betTitle = new Label("Apuesta: ");
+        Label betNumber = new Label(betText.getText());
+        betHb.getChildren().addAll(betTitle, betNumber);
+        vb.getChildren().add(betHb);
+
         vb.setLayoutX(700);
         vb.setLayoutY(30);
 
@@ -189,16 +207,25 @@ public class PaneManagement {
 
     }
 
-    public boolean verificarProhibido(RuletaNum rn, int forbbidenNumber) {
+    public void exitGame(String message) {
+        gameStage.close();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Juego Finalizado");
+        alert.setHeaderText("El juego se ha terminado");
+        alert.setContentText(message);
+        alert.show();
+    }
+
+    public boolean isForbidden(RuletaNum rn, int forbbidenNumber) {
 
         for (CirculoNumerico cn : rn.getRuletasNumericas()) {
             for (int i = 0; i < cn.getListaNumerica().size(); i++) {
                 if (cn.getListaNumerica().get(i) < 0 || cn.getListaNumerica().get(i) == forbbidenNumber) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
 
     }
 
@@ -218,6 +245,50 @@ public class PaneManagement {
             return false;
         }
         return string.matches("[+-]?\\d*(\\.\\d+)?");
+    }
+    
+    public int getForbiddenNum(RuletaNum rn){
+        int fn = new Random().nextInt(rn.calcularValorRuleta());
+        while(betText.getText().equals(String.valueOf(fn))){
+                fn = new Random().nextInt(rn.calcularValorRuleta());
+        }
+        return fn;
+    }
+    public void computerMovement(RuletaNum ruletaNumerica){
+        Random random = new Random();
+        
+        //indice random para remover un elemento o rotar una lista circular
+        int index1 = random.nextInt(2);
+        // index1 = 0 para rotar
+        // index1 = 1 para eliminar
+        
+        //indice random para obtener una de las listas (para rotacion)
+        int bound = ruletaNumerica.getRuletasNumericas().size();
+        int index2 = random.nextInt(bound);
+        
+        //indice random para aplicar el remove() en caso de eliminacion
+        int indexRemove = 0;
+        
+        // variable boolean de control para el sentido de las rotaciones
+        boolean rotacion = random.nextBoolean();
+        // rotacion = true para rotar a la derecha
+        // rotacion = false para rotar a la izquierda
+
+        
+        if(index1 == 0){
+            
+            if(rotacion){
+                ruletaNumerica.getCircleNumByIndex(index2).rotarDerecha();
+            } else{
+                ruletaNumerica.getCircleNumByIndex(index2).rotarIzquierda();
+            }
+        } else{
+            for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
+                cn.getListaNumerica().remove(indexRemove);
+                
+            }
+        }        
+        
     }
 
 }

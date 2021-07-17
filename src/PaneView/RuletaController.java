@@ -6,24 +6,20 @@
 package PaneView;
 
 import Ruleta.*;
-import TDA.CircularlyDoubleLinkedList;
 import static java.lang.Math.*;
 import java.util.LinkedHashSet;
 import java.util.Random;
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 /**
  *
  * @author omarc
  */
-public class RuletaController extends Application {
+public class RuletaController {
 
     public double generateX(int k, int n, double resolution) {
         return resolution * (1 - cos(k * (2 * Math.PI / n)));
@@ -66,18 +62,24 @@ public class RuletaController extends Application {
                     PaneManagement pm = new PaneManagement();
                     String info[] = String.valueOf(button.getUserData()).split(",");
                     if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R")) {
-                        
-                        System.out.println(pm.cb.getValue() + " -");
-                        System.out.println(Integer.valueOf(info[0]) + " - " + Integer.valueOf(info[1]));
-                        
-                        if (pm.cb.getValue().equals("Izquierda")) {                            
+
+                        if (pm.cb.getValue().equals("Izquierda")) {
                             rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarIzquierda();
                         } else if (pm.cb.getValue().equals("Derecha")) {
-                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();                            
+                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();
                         }
-                    }else{
-                        rn.eliminar(Integer.valueOf(info[1]));                    
-                    }                    
+                        pm.mandatoryRotation = false;
+                    } else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") & !pm.mandatoryRotation) {
+                        rn.eliminar(Integer.valueOf(info[1]));
+                        pm.mandatoryRotation = true;
+                    } else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") & pm.mandatoryRotation) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Rotacion obligatoria");
+                        alert.setHeaderText("Rotacion obligatoria");
+                        alert.setContentText("Luego de eliminar tiene que obligatoriamente hacer una rotacion.");
+                        alert.show();
+                    }
+                    ++PaneManagement.actions;
                     refreshScene(rn);
                 });
 
@@ -94,39 +96,12 @@ public class RuletaController extends Application {
             ++circle;
         }
     }
-    
-    public void refreshScene(RuletaNum rn){        
+
+    public void refreshScene(RuletaNum rn) {
         PaneManagement pm = new PaneManagement();
         pm.gameRoot.getChildren().clear();
         pm.getGameRoot(rn);
         pm.gameScene.setRoot(pm.gameRoot);
     }
 
-    public static void main(String[] arg) {
-        launch(arg);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        double resX = 500, resY = 500;
-        Pane pane = new Pane();
-
-        LinkedHashSet<CirculoNumerico> rul = new LinkedHashSet<>();
-        CirculoNumerico cn1 = new CirculoNumerico(new CircularlyDoubleLinkedList());
-        CirculoNumerico cn2 = new CirculoNumerico(new CircularlyDoubleLinkedList());
-        CirculoNumerico cn3 = new CirculoNumerico(new CircularlyDoubleLinkedList());
-
-        cn1.llenarListaNum(4);
-        cn2.llenarListaNum(4);
-        cn3.llenarListaNum(4);
-        rul.add(cn1);
-        rul.add(cn2);
-        rul.add(cn3);
-
-        generateRuleta(new RuletaNum(rul), resX, pane);
-
-        Scene scene = new Scene(pane, resX, resY);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 }

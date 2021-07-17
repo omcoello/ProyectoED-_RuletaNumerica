@@ -34,46 +34,5 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
-    /*
-    
-    public void movimientoMaquina(){
-        Random random = new Random();
-        
-        //indice random para remover un elemento o rotar una lista circular
-        int index1 = random.nextInt(2);
-        // index1 = 0 para rotar
-        // index1 = 1 para eliminar
-        
-        //indice random para obtener una de las listas (para rotacion)
-        int bound = ruletaNumerica.getRuletasNumericas().size();
-        int index2 = random.nextInt(bound);
-        
-        //indice random para aplicar el remove() en caso de eliminacion
-        int indexRemove = 0;
-        
-        // variable boolean de control para el sentido de las rotaciones
-        boolean rotacion = random.nextBoolean();
-        // rotacion = true para rotar a la derecha
-        // rotacion = false para rotar a la izquierda
-
-        
-        if(index1 == 0){
-            
-            if(rotacion){
-                ruletaNumerica.getCircleNumByIndex(index2).rotarDerecha();
-            } else{
-                ruletaNumerica.getCircleNumByIndex(index2).rotarIzquierda();
-            }
-        } else{
-            for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
-                cn.getListaNumerica().remove(indexRemove);
-                
-            }
-        }
-        
-        new RuletaController().generateRuleta(ruletaNumerica, 500, pane);
-        
-    }
-    */
+                    
 }
