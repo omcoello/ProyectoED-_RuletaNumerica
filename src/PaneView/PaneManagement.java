@@ -102,9 +102,7 @@ public class PaneManagement {
                 forbiddenNum = getForbiddenNum(rn);
 
                 gameRoot = getGameRoot(rn);
-                BackgroundFill bf = new BackgroundFill(Color.valueOf("#f1ef5d"), new CornerRadii(1),
-         new Insets(0.0,0.0,0.0,0.0));
-                gameRoot.setBackground(new Background(bf));
+                
                 gameScene = new Scene(gameRoot, 1000, 675);
                 gameStage = new Stage();
                 gameStage.setScene(gameScene);
@@ -228,9 +226,9 @@ public class PaneManagement {
         betNumber.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         betHb.getChildren().addAll(betTitle, betNumber);
         vb.getChildren().add(betHb);
-        BackgroundFill bf = new BackgroundFill(Color.valueOf("#f1ef5d"), new CornerRadii(1),
-         new Insets(0.0,0.0,0.0,0.0));
-                gameRoot.setBackground(new Background(bf));
+        File path = new File("src/Resources/fondo.jpeg");
+        Image img = new Image(path.toURI().toString());
+        gameRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1000, 675, false, false, false, false))));
 
         vb.setLayoutX(700);
         vb.setLayoutY(30);
