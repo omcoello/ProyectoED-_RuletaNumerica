@@ -45,6 +45,7 @@ public class RuletaController {
             Circle c = new Circle();
             c.setCenterX(resolution / 2);
             c.setCenterY(resolution / 2);
+            c.setStrokeWidth(10);
             c.setStroke(Color.valueOf(getRandomColor()));
             c.setFill(null);
             pane.getChildren().add(c);
