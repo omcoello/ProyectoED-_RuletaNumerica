@@ -48,6 +48,7 @@ public class PaneManagement {
     static int forbiddenNum = 0;
     static int actions = 0;
     static boolean mandatoryRotation;
+    static boolean mandatoryElimination;
 
     static boolean forbiddenBoolean = false;
     static boolean computerBoolean = false;

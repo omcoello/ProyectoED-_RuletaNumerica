@@ -62,18 +62,27 @@ public class RuletaController {
                 button.setOnAction(f -> {
                     PaneManagement pm = new PaneManagement();
                     String info[] = String.valueOf(button.getUserData()).split(",");
-                    if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R")) {
+                    if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R") && !pm.mandatoryElimination) {
 
                         if (pm.cb.getValue().equals("Izquierda")) {
                             rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarIzquierda();
                         } else if (pm.cb.getValue().equals("Derecha")) {
                             rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();
                         }
+                        pm.mandatoryElimination = true;
                         pm.mandatoryRotation = false;
-                    } else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") & !pm.mandatoryRotation) {
+                    }
+                    else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R") && pm.mandatoryElimination) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Eliminacion obligatoria");
+                        alert.setHeaderText("Eliminacion obligatoria");
+                        alert.setContentText("Luego de rotar tiene que obligatoriamente hacer una eliminacion.");
+                        alert.show();
+                    }else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") && !pm.mandatoryRotation) {
                         rn.eliminar(Integer.valueOf(info[1]));
                         pm.mandatoryRotation = true;
-                    } else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") & pm.mandatoryRotation) {
+                        pm.mandatoryElimination = false;
+                    } else if (pm.functionsToggle.getSelectedToggle().getUserData().equals("E") && pm.mandatoryRotation) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Rotacion obligatoria");
                         alert.setHeaderText("Rotacion obligatoria");
