@@ -20,12 +20,7 @@ import javafx.stage.Stage;
  * @author omarc
  */
 public class Main extends Application {
-    static Pane pane = new Pane();
-    boolean ganador = false;
-    boolean perdedor = false;
-    int numeroProhibido = 20;
-    RuletaNum ruletaNumerica;
-    double resX = 500, resY = 500;
+        
     
     public static void main(String[] arg) {
         launch(arg);
@@ -33,31 +28,14 @@ public class Main extends Application {
 
     @Override
 
-    public void start(Stage primaryStage) throws Exception {/*
-        double resX = 500, resY = 500;
-        
-        LinkedHashSet<CirculoNumerico> rul = new LinkedHashSet<>();
-        CirculoNumerico cn1 = new CirculoNumerico(new CircularlyDoubleLinkedList());
-        CirculoNumerico cn2 = new CirculoNumerico(new CircularlyDoubleLinkedList());
-        CirculoNumerico cn3 = new CirculoNumerico(new CircularlyDoubleLinkedList());
+    public void start(Stage primaryStage) throws Exception {
 
-        cn1.llenarListaNum(4);        
-        cn2.llenarListaNum(4);
-        cn3.llenarListaNum(4);
-        rul.add(cn1);
-        rul.add(cn2);
-        rul.add(cn3);
-        
-        new RuletaController().generateRuleta(new RuletaNum(rul), resX, pane);
-        
-        Scene scene = new Scene(pane, resX+25, resY+25);
-*/
         Scene scene = new Scene(new PaneManagement().getIniRoot(),500,500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
     
-    
+    /*
     
     public void movimientoMaquina(){
         Random random = new Random();
@@ -94,8 +72,8 @@ public class Main extends Application {
             }
         }
         
-        new RuletaController().generateRuleta(ruletaNumerica, resX, pane);
+        new RuletaController().generateRuleta(ruletaNumerica, 500, pane);
         
     }
-    
+    */
 }

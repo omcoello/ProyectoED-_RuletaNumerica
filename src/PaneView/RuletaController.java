@@ -41,8 +41,6 @@ public class RuletaController extends Application {
         }
         return hexColor;
     }
-    
-    
 
     public void generateRuleta(RuletaNum rn, double resolution, Pane pane) {
         LinkedHashSet<CirculoNumerico> rul = rn.getRuletasNumericas();
@@ -60,14 +58,32 @@ public class RuletaController extends Application {
                 double recenteringX = (resolution - actualResolution) / 2 + generateX(e, n, actualResolution / 2);
                 double recenteringY = (resolution - actualResolution) / 2 + generateY(e, n, actualResolution / 2);
 
-
                 Button button = new Button(String.valueOf(cn.getListaNumerica().get(e - 1)));
                 button.setStyle("-fx-margin: 2px; -fx-padding: 3px; -fx-font-weight: bold");
+                button.setUserData(circle + "," + (e - 1));
+
+                button.setOnAction(f -> {
+                    PaneManagement pm = new PaneManagement();
+                    String info[] = String.valueOf(button.getUserData()).split(",");
+                    if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R")) {
+                        
+                        if (pm.cb.getValue().equals("Izquierda")) {
+
+                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarIzquierda();
+
+                        } else if (pm.cb.getValue().equals("Derecha")) {
+                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();
+                        }
+                    }else{
+                        rn.eliminar(Integer.valueOf(info[1]));
+                    }
+
+                });
+
                 pane.getChildren().add(button);
-                button.setUserData(circle+","+ (e-1));
+
                 button.setLayoutX(recenteringX);
                 button.setLayoutY(recenteringY);
-
 
                 //Ajustando radio del círuclo según la resolución manejada actualmente
                 if (e == 1) {
@@ -76,6 +92,12 @@ public class RuletaController extends Application {
             }
             ++circle;
         }
+    }
+    
+    public void refreshScene(RuletaNum rn){
+        PaneManagement pm = new PaneManagement();
+        pm.gameRoot.getChildren().clear();
+        pm.getGameRoot(rn);
     }
 
     public static void main(String[] arg) {

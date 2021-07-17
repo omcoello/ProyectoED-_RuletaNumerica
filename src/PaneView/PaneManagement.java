@@ -4,11 +4,13 @@ import Ruleta.*;
 import TDA.CircularlyDoubleLinkedList;
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.Random;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -34,12 +36,15 @@ public class PaneManagement {
 
     Stage gameStage;
     Scene gameScene;
-    Pane gameRoot;
+    Pane gameRoot= new Pane();
     static RuletaNum rn;
-    static boolean wildcardBoolean = false;
+    static ToggleGroup functionsToggle = new ToggleGroup();
+    static ComboBox cb = new ComboBox();
+    final int forbiddenNum = new Random().nextInt(21);
+    
+
     static boolean forbiddenBoolean = false;
     static boolean computerBoolean = false;
-    
 
     public VBox getIniRoot() {
         iniRoot = new VBox(17);
@@ -67,10 +72,7 @@ public class PaneManagement {
 
         betHb.getChildren().addAll(betLabel, betText);
 
-        //Anadiendo funcionalidades opcionales a confirmar                
-        CheckBox wildcard = new CheckBox("Comodin ");
-        wildcard.setStyle(style);
-        
+        //Anadiendo funcionalidades opcionales a confirmar                               
         CheckBox forbiddenNumber = new CheckBox("Numero prohibido");
         forbiddenNumber.setStyle(style);
 
@@ -80,17 +82,18 @@ public class PaneManagement {
         Button playButton = new Button("Jugar");
         playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         playButton.setOnAction(e -> {
+            
             String bet = betText.getText().trim();
             String cir = circleText.getText().trim();
             String ele = eleText.getText().trim();
+            
             if (isNumeric(bet) && isNumeric(cir) && isNumeric(ele) && Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9 && Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10 && Integer.valueOf(bet) > 0) {
-                
+
                 forbiddenBoolean = forbiddenNumber.isSelected();
-                wildcardBoolean = wildcard.isSelected();
                 computerBoolean = compDecition.isSelected();
-                
+
                 rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
-                
+
                 gameRoot = getGameRoot(rn);
                 gameScene = new Scene(gameRoot, 1000, 675);
                 gameStage = new Stage();
@@ -128,7 +131,7 @@ public class PaneManagement {
 
         });
 
-        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, wildcard, forbiddenNumber, compDecition, playButton);
+        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, forbiddenNumber, compDecition, playButton);
         File path = new File("src/Resources/roulette-switch-hero.jpg");
         Image img = new Image(path.toURI().toString());
         iniRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false, false, false))));
@@ -139,11 +142,46 @@ public class PaneManagement {
 
     public Pane getGameRoot(RuletaNum rn) {
 
-        RuletaController rc = new RuletaController();
-        gameRoot = new Pane();
+        RuletaController rc = new RuletaController();        
         rc.generateRuleta(rn, 650, gameRoot);
+
+        VBox vb = new VBox(15);
+        RadioButton rotateRb = new RadioButton("Rotacion");
+        rotateRb.setUserData("R");
+        rotateRb.setSelected(true);
+
+        RadioButton eliminateRb = new RadioButton("Eliminacion");
+        eliminateRb.setUserData("E");
+
+        Label orientationLb = new Label("Direccion de giro:");        
+        cb.getItems().addAll("Izquierda", "Derecha");
+        cb.setValue(cb.getItems().get(0));
+
+        
+        rotateRb.setToggleGroup(functionsToggle);
+        eliminateRb.setToggleGroup(functionsToggle);
+
+        vb.getChildren().addAll(rotateRb, orientationLb, cb, eliminateRb);
+
+        if (forbiddenBoolean) {
+            HBox forbiddenHb = new HBox(10);
+            Label forbiddenTitle = new Label("Numero prohibido: ");
+            Label forbiddenNumber = new Label(String.valueOf(forbiddenNum));
+            forbiddenHb.getChildren().addAll(forbiddenTitle, forbiddenNumber);
+            vb.getChildren().add(forbiddenHb);
+        }
+        
+        HBox valueHb = new HBox(10);
+            Label valueTitle = new Label("Valor: ");
+            Label valueNumber = new Label(String.valueOf(rn.calcularValorRuleta()));
+            valueHb.getChildren().addAll(valueTitle, valueNumber);
+            vb.getChildren().add(valueHb);
         
         
+        vb.setLayoutX(700);
+        vb.setLayoutY(30);
+
+        gameRoot.getChildren().addAll(vb);
 
         return gameRoot;
 

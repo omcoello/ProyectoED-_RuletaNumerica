@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/PaneView/PaneManagement.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>163</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/Ruleta/RuletaNum.java</file>
+            <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/PaneView/PaneManagement.java</file>
             <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/PaneView/Main.java</file>
+            <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/TDA/CircularlyDoubleLinkedList.java</file>
             <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/PaneView/RuletaController.java</file>
+            <file>file:/C:/Users/omarc/OneDrive/Documents/Universidad/6%20Semestre/Estructura%20de%20Datos/Proyectos/Proyecto%20P1/ProyectoED-_RuletaNumerica/src/Ruleta/CirculoNumerico.java</file>
         </group>
     </open-files>
 </project-private>
