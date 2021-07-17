@@ -17,13 +17,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -99,6 +102,7 @@ public class PaneManagement {
                 forbiddenNum = getForbiddenNum(rn);
 
                 gameRoot = getGameRoot(rn);
+                
                 gameScene = new Scene(gameRoot, 1000, 675);
                 gameStage = new Stage();
                 gameStage.setScene(gameScene);
@@ -175,8 +179,12 @@ public class PaneManagement {
 
         if (forbiddenBoolean) {
             HBox forbiddenHb = new HBox(10);
+            forbiddenHb.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
             Label forbiddenTitle = new Label("Numero prohibido: ");
             Label forbiddenNumber = new Label(String.valueOf(forbiddenNum));
+            forbiddenNumber.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
             forbiddenHb.getChildren().addAll(forbiddenTitle, forbiddenNumber);
             vb.getChildren().add(forbiddenHb);
             if (isForbidden(rn, forbiddenNum)) {
@@ -218,11 +226,16 @@ public class PaneManagement {
         betNumber.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         betHb.getChildren().addAll(betTitle, betNumber);
         vb.getChildren().add(betHb);
+        File path = new File("src/Resources/fondo.jpeg");
+        Image img = new Image(path.toURI().toString());
+        gameRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1000, 675, false, false, false, false))));
 
         vb.setLayoutX(700);
         vb.setLayoutY(30);
-
+        
         gameRoot.getChildren().addAll(vb);
+        
+        
 
         return gameRoot;
 
