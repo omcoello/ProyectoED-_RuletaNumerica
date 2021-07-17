@@ -78,8 +78,8 @@ public class Main extends Application {
         boolean rotacion = random.nextBoolean();
         // rotacion = true para rotar a la derecha
         // rotacion = false para rotar a la izquierda
-
-        int control = 0;
+        
+        int control = 0;        
         for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
             if(index1 == 0){
                 while (control != index2){

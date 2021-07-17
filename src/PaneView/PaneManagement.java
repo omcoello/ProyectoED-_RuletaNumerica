@@ -31,12 +31,18 @@ import javafx.stage.Stage;
 public class PaneManagement {
 
     VBox iniRoot;
+
     Stage gameStage;
     Scene gameScene;
     Pane gameRoot;
+    static RuletaNum rn;
+    static boolean wildcardBoolean = false;
+    static boolean forbiddenBoolean = false;
+    static boolean computerBoolean = false;
+    
 
     public VBox getIniRoot() {
-        iniRoot = new VBox(20);
+        iniRoot = new VBox(17);
 
         String style = "-fx-font-weight: bold; -fx-font-size: 16px;-fx-background-color: #44BEC6;";
 
@@ -64,6 +70,9 @@ public class PaneManagement {
         //Anadiendo funcionalidades opcionales a confirmar                
         CheckBox wildcard = new CheckBox("Comodin ");
         wildcard.setStyle(style);
+        
+        CheckBox forbiddenNumber = new CheckBox("Numero prohibido");
+        forbiddenNumber.setStyle(style);
 
         CheckBox compDecition = new CheckBox("Ayuda computador ");
         compDecition.setStyle(style);
@@ -75,22 +84,33 @@ public class PaneManagement {
             String cir = circleText.getText().trim();
             String ele = eleText.getText().trim();
             if (isNumeric(bet) && isNumeric(cir) && isNumeric(ele) && Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9 && Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10 && Integer.valueOf(bet) > 0) {
-                RuletaNum rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
                 
+                forbiddenBoolean = forbiddenNumber.isSelected();
+                wildcardBoolean = wildcard.isSelected();
+                computerBoolean = compDecition.isSelected();
+                
+                rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
+                
+                gameRoot = getGameRoot(rn);
+                gameScene = new Scene(gameRoot, 1000, 675);
+                gameStage = new Stage();
+                gameStage.setScene(gameScene);
+                gameStage.show();
+
             } else {
-                if (!(isNumeric(bet) && isNumeric(cir) && isNumeric(ele))) {                    
+                if (!(isNumeric(bet) && isNumeric(cir) && isNumeric(ele))) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese datos numericos en los cuadros de texto solicitados.");
                     alert.show();
-                } else if (!(Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9)) {                    
+                } else if (!(Integer.valueOf(cir) > 1 && Integer.valueOf(cir) < 9)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText("Error");
                     alert.setContentText("Ingrese un numero mayor a 1 y menor a 9 para la cantidad de circulos");
                     alert.show();
-                } else if (!(Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10)) {                    
+                } else if (!(Integer.valueOf(ele) > 1 && Integer.valueOf(ele) < 10)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Dialog");
                     alert.setHeaderText("Error");
@@ -108,24 +128,38 @@ public class PaneManagement {
 
         });
 
-        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, wildcard, compDecition, playButton);
+        iniRoot.getChildren().addAll(circleHb, eleHb, betHb, wildcard, forbiddenNumber, compDecition, playButton);
         File path = new File("src/Resources/roulette-switch-hero.jpg");
         Image img = new Image(path.toURI().toString());
         iniRoot.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(500, 500, false, false, false, false))));
-        iniRoot.setPadding(new Insets(200, 20, 40, 20));
+        iniRoot.setPadding(new Insets(185, 20, 40, 20));
 
         return iniRoot;
     }
-    
-    public Pane getGameRoot(RuletaNum rn){
-        
+
+    public Pane getGameRoot(RuletaNum rn) {
+
         RuletaController rc = new RuletaController();
-                gameRoot = new Pane();
-                gameScene = new Scene(gameRoot, 625, 750);
-                rc.generateRuleta(rn, 625, gameRoot);
+        gameRoot = new Pane();
+        rc.generateRuleta(rn, 650, gameRoot);
         
         
+
         return gameRoot;
+
+    }
+
+    public boolean verificarProhibido(RuletaNum rn, int forbbidenNumber) {
+
+        for (CirculoNumerico cn : rn.getRuletasNumericas()) {
+            for (int i = 0; i < cn.getListaNumerica().size(); i++) {
+                if (cn.getListaNumerica().get(i) < 0 || cn.getListaNumerica().get(i) == forbbidenNumber) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 
     public RuletaNum constructRuleta(int circles, int elements) {
