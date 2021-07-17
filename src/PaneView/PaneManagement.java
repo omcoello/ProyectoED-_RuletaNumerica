@@ -34,13 +34,13 @@ public class PaneManagement {
 
     VBox iniRoot;
 
-    Stage gameStage;
-    Scene gameScene;
-    Pane gameRoot= new Pane();
+    static Stage gameStage;
+    static Scene gameScene;
+    static Pane gameRoot;
     static RuletaNum rn;
     static ToggleGroup functionsToggle = new ToggleGroup();
-    static ComboBox cb = new ComboBox();
-    final int forbiddenNum = new Random().nextInt(21);
+    static ComboBox cb ;
+    
     
 
     static boolean forbiddenBoolean = false;
@@ -93,7 +93,8 @@ public class PaneManagement {
                 computerBoolean = compDecition.isSelected();
 
                 rn = constructRuleta(Integer.valueOf(cir), Integer.valueOf(ele));
-
+                
+                
                 gameRoot = getGameRoot(rn);
                 gameScene = new Scene(gameRoot, 1000, 675);
                 gameStage = new Stage();
@@ -141,7 +142,7 @@ public class PaneManagement {
     }
 
     public Pane getGameRoot(RuletaNum rn) {
-
+        gameRoot = new Pane();
         RuletaController rc = new RuletaController();        
         rc.generateRuleta(rn, 650, gameRoot);
 
@@ -153,7 +154,8 @@ public class PaneManagement {
         RadioButton eliminateRb = new RadioButton("Eliminacion");
         eliminateRb.setUserData("E");
 
-        Label orientationLb = new Label("Direccion de giro:");        
+        Label orientationLb = new Label("Direccion de giro:");   
+        cb = new ComboBox();
         cb.getItems().addAll("Izquierda", "Derecha");
         cb.setValue(cb.getItems().get(0));
 
@@ -166,7 +168,7 @@ public class PaneManagement {
         if (forbiddenBoolean) {
             HBox forbiddenHb = new HBox(10);
             Label forbiddenTitle = new Label("Numero prohibido: ");
-            Label forbiddenNumber = new Label(String.valueOf(forbiddenNum));
+            Label forbiddenNumber = new Label("17");
             forbiddenHb.getChildren().addAll(forbiddenTitle, forbiddenNumber);
             vb.getChildren().add(forbiddenHb);
         }

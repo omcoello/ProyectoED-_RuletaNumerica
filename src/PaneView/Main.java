@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * @author omarc
  */
 public class Main extends Application {
-        
+            
     
     public static void main(String[] arg) {
         launch(arg);

@@ -67,17 +67,18 @@ public class RuletaController extends Application {
                     String info[] = String.valueOf(button.getUserData()).split(",");
                     if (pm.functionsToggle.getSelectedToggle().getUserData().equals("R")) {
                         
-                        if (pm.cb.getValue().equals("Izquierda")) {
-
+                        System.out.println(pm.cb.getValue() + " -");
+                        System.out.println(Integer.valueOf(info[0]) + " - " + Integer.valueOf(info[1]));
+                        
+                        if (pm.cb.getValue().equals("Izquierda")) {                            
                             rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarIzquierda();
-
                         } else if (pm.cb.getValue().equals("Derecha")) {
-                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();
+                            rn.getCircleNumByIndex(Integer.valueOf(info[0])).rotarDerecha();                            
                         }
                     }else{
-                        rn.eliminar(Integer.valueOf(info[1]));
-                    }
-
+                        rn.eliminar(Integer.valueOf(info[1]));                    
+                    }                    
+                    refreshScene(rn);
                 });
 
                 pane.getChildren().add(button);
@@ -94,10 +95,11 @@ public class RuletaController extends Application {
         }
     }
     
-    public void refreshScene(RuletaNum rn){
+    public void refreshScene(RuletaNum rn){        
         PaneManagement pm = new PaneManagement();
         pm.gameRoot.getChildren().clear();
         pm.getGameRoot(rn);
+        pm.gameScene.setRoot(pm.gameRoot);
     }
 
     public static void main(String[] arg) {
