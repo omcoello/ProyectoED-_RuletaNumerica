@@ -72,34 +72,25 @@ public class Main extends Application {
         int index2 = random.nextInt(bound);
         
         //indice random para aplicar el remove() en caso de eliminacion
-        int indexRemove;
+        int indexRemove = 0;
         
         // variable boolean de control para el sentido de las rotaciones
         boolean rotacion = random.nextBoolean();
         // rotacion = true para rotar a la derecha
         // rotacion = false para rotar a la izquierda
+
         
-        int control = 0;        
-        for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
-            if(index1 == 0){
-                while (control != index2){
-                    control++;
-                }
-                if(control == index2){
-                    if(rotacion){
-                        cn.rotarDerecha();
-                        System.out.println("Se ha rotado a la derecha");
-                    } else{
-                        cn.rotarIzquierda();
-                        System.out.println("Se ha rotado a la izquierda");
-                    }
-                }
-
-
-            } else if(index1 == 1){
-                indexRemove = random.nextInt(cn.getListaNumerica().size());
+        if(index1 == 0){
+            
+            if(rotacion){
+                ruletaNumerica.getCircleNumByIndex(index2).rotarDerecha();
+            } else{
+                ruletaNumerica.getCircleNumByIndex(index2).rotarIzquierda();
+            }
+        } else{
+            for(CirculoNumerico cn: ruletaNumerica.getRuletasNumericas()){
                 cn.getListaNumerica().remove(indexRemove);
-                System.out.println("Se hizo una eliminacion");
+                
             }
         }
         

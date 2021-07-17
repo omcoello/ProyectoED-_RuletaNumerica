@@ -32,6 +32,14 @@ public class RuletaNum {
             cn.getListaNumerica().remove(index);
         }
     }
+    
+    public CirculoNumerico getCircleNumByIndex(int index){
+        
+        CirculoNumerico[] cnArray = new CirculoNumerico[ruletasNumericas.size()];
+        cnArray = ruletasNumericas.toArray(cnArray);
+        return cnArray[index];
+        
+    }
 
     public LinkedHashSet<CirculoNumerico> getRuletasNumericas() {
         return ruletasNumericas;
