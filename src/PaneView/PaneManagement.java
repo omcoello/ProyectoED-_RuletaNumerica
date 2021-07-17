@@ -292,12 +292,25 @@ public class PaneManagement {
                 ruletaNumerica.getCircleNumByIndex(index2).rotarIzquierda();
             }
             //mostrarAlerta
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Eleccion de la computadora");
+            alert.setHeaderText("la computadora ha realizado una rotacion");
+            int agregar = index2+1;
+            alert.setContentText("Se ha rotado el circulo numero "+agregar+"\n psdta: el circulo mas interno es el numero 1");
+            alert.show();
+            
         } else {
             for (CirculoNumerico cn : ruletaNumerica.getRuletasNumericas()) {
                 cn.getListaNumerica().remove(indexRemove);
 
             }
             //mostrarAlerta
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Eleccion de la computadora");
+            alert.setHeaderText("la computadora ha realizado una eliminacion");
+            int agregar = indexRemove;
+            alert.setContentText("Se eliminaran todos los numeros de la posicion "+agregar+ " en todos los circulos");
+            alert.show();
         }
 
     }
