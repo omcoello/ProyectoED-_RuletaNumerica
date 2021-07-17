@@ -24,10 +24,6 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
 /**
@@ -56,7 +52,7 @@ public class PaneManagement {
     public VBox getIniRoot() {
         iniRoot = new VBox(17);
 
-        String style = "-fx-font-weight: bold; -fx-font-size: 16px;-fx-background-color: #44BEC6;";
+        String style = "-fx-font-weight: bold; -fx-font-size: 20px;-fx-background-color: #44BEC6;";
 
         HBox circleHb = new HBox(20);
         Label circleLabel = new Label("Circulos: ");
@@ -87,7 +83,7 @@ public class PaneManagement {
         compDecition.setStyle(style);
 
         Button playButton = new Button("Jugar");
-        playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        playButton.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         playButton.setOnAction(e -> {
 
             String bet = betText.getText().trim();
@@ -154,14 +150,20 @@ public class PaneManagement {
         rc.generateRuleta(rn, 650, gameRoot);
 
         VBox vb = new VBox(15);
+        vb.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
         RadioButton rotateRb = new RadioButton("Rotacion");
         rotateRb.setUserData("R");
         rotateRb.setSelected(true);
+        rotateRb.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
 
         RadioButton eliminateRb = new RadioButton("Eliminacion");
+        eliminateRb.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         eliminateRb.setUserData("E");
 
         Label orientationLb = new Label("Direccion de giro:");
+        orientationLb.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         cb = new ComboBox();
         cb.getItems().addAll("Izquierda", "Derecha");
         cb.setValue(cb.getItems().get(0));
@@ -196,14 +198,24 @@ public class PaneManagement {
         }
 
         HBox valueHb = new HBox(10);
+        valueHb.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
         Label valueTitle = new Label("Valor: ");
+        valueTitle.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         Label valueNumber = new Label(String.valueOf(rn.calcularValorRuleta()));
+        valueNumber.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         valueHb.getChildren().addAll(valueTitle, valueNumber);
         vb.getChildren().add(valueHb);
 
         HBox betHb = new HBox(10);
+        betHb.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
+        + "-fx-border-radius: 5;" + "-fx-border-color: blue;");
         Label betTitle = new Label("Apuesta: ");
+        betTitle.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         Label betNumber = new Label(betText.getText());
+        betNumber.setStyle("-fx-font-weight: bold; -fx-font-size:18px;");
         betHb.getChildren().addAll(betTitle, betNumber);
         vb.getChildren().add(betHb);
 
@@ -293,12 +305,25 @@ public class PaneManagement {
                 ruletaNumerica.getCircleNumByIndex(index2).rotarIzquierda();
             }
             //mostrarAlerta
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Eleccion de la computadora");
+            alert.setHeaderText("la computadora ha realizado una rotacion");
+            int agregar = index2+1;
+            alert.setContentText("Se ha rotado el circulo numero "+agregar+"\n psdta: el circulo mas interno es el numero 1");
+            alert.show();
+            
         } else {
             for (CirculoNumerico cn : ruletaNumerica.getRuletasNumericas()) {
                 cn.getListaNumerica().remove(indexRemove);
 
             }
             //mostrarAlerta
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Eleccion de la computadora");
+            alert.setHeaderText("la computadora ha realizado una eliminacion");
+            int agregar = indexRemove;
+            alert.setContentText("Se eliminaran todos los numeros de la posicion "+agregar+ " en todos los circulos");
+            alert.show();
         }
 
     }
